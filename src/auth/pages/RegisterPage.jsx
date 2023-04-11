@@ -1,8 +1,10 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useState } from 'react';
 
 const formData = {
   displayName: '',
@@ -17,10 +19,19 @@ const formValidations = {
 };
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const { status, errorMessage } = useSelector((state) => state.auth);
+  const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
+
   const { displayName, email, password, onInputChange, isFormValid, displayNameValid, emailValid, passwordValid } = useForm(formData, formValidations);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setFormSubmitted(true);
+
+    if (!isFormValid) return;
 
     console.log({ displayName, email, password });
   };
@@ -39,8 +50,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="Nombre completo"
               fullWidth
-              error={displayNameValid}
-              helperText={displayNameValid}
+              error={!!displayNameValid && formSubmitted}
+              helperText={!!displayNameValid && formSubmitted ? displayNameValid : null}
             />
           </Grid>
 
@@ -54,8 +65,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="correo@google.com"
               fullWidth
-              error={emailValid}
-              helperText={emailValid}
+              error={!!emailValid && formSubmitted}
+              helperText={!!emailValid && formSubmitted ? emailValid : null}
             />
           </Grid>
 
@@ -69,14 +80,24 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="Contraseña"
               fullWidth
-              error={passwordValid}
-              helperText={passwordValid}
+              error={!!displayNameValid && formSubmitted}
+              helperText={!!passwordValid && formSubmitted ? passwordValid : null}
             />
           </Grid>
 
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
+            <Grid item xs={12} display={!!errorMessage ? '' : 'none'}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid>
+
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" fullWidth>
+              <Button
+                //
+                type="submit"
+                variant="contained"
+                fullWidth
+                disabled={isCheckingAuthentication}
+              >
                 Crear cuenta
               </Button>
             </Grid>
