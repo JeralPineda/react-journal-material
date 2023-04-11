@@ -36,7 +36,7 @@ export const registerUserWithEmailPassword = async ({ displayName, email, passwo
     //TODO: actualizar el displayName en Firebase
 
     return {
-      ok: false,
+      ok: true,
       uid,
       photoURL,
       email,
