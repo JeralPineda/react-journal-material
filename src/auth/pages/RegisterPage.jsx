@@ -4,12 +4,20 @@ import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 
+const formData = {
+  displayName: '',
+  email: '',
+  password: '',
+};
+
+const formValidations = {
+  email: [(value) => value.includes('@'), 'El email debe tener una @'],
+  password: [(value) => value.length >= 6, 'El password debe de tener mas de 6 letras.'],
+  displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
+};
+
 export const RegisterPage = () => {
-  const { displayName, email, password, onInputChange } = useForm({
-    displayName: '',
-    email: '',
-    password: '',
-  });
+  const { displayName, email, password, onInputChange, isFormValid, displayNameValid, emailValid, passwordValid } = useForm(formData, formValidations);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +39,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="Nombre completo"
               fullWidth
+              error={displayNameValid}
+              helperText={displayNameValid}
             />
           </Grid>
 
@@ -44,6 +54,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="correo@google.com"
               fullWidth
+              error={emailValid}
+              helperText={emailValid}
             />
           </Grid>
 
@@ -57,6 +69,8 @@ export const RegisterPage = () => {
               onChange={onInputChange}
               placeholder="Contraseña"
               fullWidth
+              error={passwordValid}
+              helperText={passwordValid}
             />
           </Grid>
 
