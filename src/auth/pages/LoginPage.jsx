@@ -4,12 +4,12 @@ import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Google } from '@mui/icons-material';
 
 import { AuthLayout } from '../layout/AuthLayout';
-import { useForm } from '../../hooks/useForm';
+import { useForm } from '../../hooks';
 import { checkingAuthentication, startGoogleSignIn } from '../../store/auth';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const { email, password, onInputChange, onResetForm } = useForm({
+  const { email, password, onInputChange } = useForm({
     email: '',
     password: '',
   });
@@ -35,10 +35,11 @@ export const LoginPage = () => {
               //
               label="Correo"
               type="email"
+              name="email"
               placeholder="correo@google.com"
-              value={email}
-              onChange={onInputChange}
               fullWidth
+              value={email}
+              onChange={(e) => onInputChange(e)}
             />
           </Grid>
 
@@ -46,6 +47,7 @@ export const LoginPage = () => {
             <TextField
               //
               label="Contraseña"
+              name="password"
               type="password"
               placeholder="Contraseña"
               value={password}
