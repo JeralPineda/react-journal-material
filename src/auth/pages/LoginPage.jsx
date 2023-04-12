@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
@@ -5,8 +6,7 @@ import { Google } from '@mui/icons-material';
 
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
-import { checkingAuthentication, startGoogleSignIn } from '../../store/auth';
-import { useMemo } from 'react';
+import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth';
 
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
@@ -22,8 +22,7 @@ export const LoginPage = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log({ email, password });
-    dispatch(checkingAuthentication());
+    dispatch(startLoginWithEmailPassword({ email, password }));
   };
 
   const onGoogleSignIn = () => {
