@@ -6,14 +6,13 @@ import { login, logout } from '../store/auth';
 
 export const useCheckAuth = () => {
   const { status } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(FirebaseAuth, async (user) => {
-      const { displayName, uid, email, photoURL } = user;
       if (!user) return dispatch(logout());
 
+      const { displayName, uid, email, photoURL } = user;
       dispatch(login({ displayName, uid, email, photoURL }));
     });
   }, []);
