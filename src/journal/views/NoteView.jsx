@@ -1,8 +1,25 @@
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
+import moment from 'moment/moment';
+
+import { useForm } from '../../hooks/useForm';
 import { ImageGallery } from '../components';
 
+import 'moment/locale/es';
+
 export const NoteView = () => {
+  const { active: note } = useSelector((state) => state.journal);
+
+  const { body, title, date, onInputChange, formState } = useForm(note);
+
+  const dateString = useMemo(() => {
+    const newDate = new Date(date);
+
+    return moment(newDate).format('DD MMMM YYYY, h:mm:ss a');
+  }, [date]);
+
   return (
     <Grid
       //
@@ -15,7 +32,7 @@ export const NoteView = () => {
     >
       <Grid item>
         <Typography fontSize={39} fontWeight="light">
-          28 de agosto, 2023
+          {dateString}
         </Typography>
       </Grid>
       <Grid item>
@@ -26,9 +43,32 @@ export const NoteView = () => {
       </Grid>
 
       <Grid container>
-        <TextField type="text" variant="filled" fullWidth placeholder="Ingrese un título" label="Título" sx={{ border: 'none', mb: 1 }} />
+        <TextField
+          //
+          type="text"
+          variant="filled"
+          fullWidth
+          placeholder="Ingrese un título"
+          label="Título"
+          sx={{ border: 'none', mb: 1 }}
+          name="title"
+          value={title}
+          onChange={onInputChange}
+        />
 
-        <TextField type="text" variant="filled" fullWidth multiline placeholder="¿Qué sucedió en el día de hoy?" minRows={5} />
+        <TextField
+          //
+          type="text"
+          variant="filled"
+          fullWidth
+          multiline
+          placeholder="¿Qué sucedió en el día de hoy?"
+          minRows={5}
+          label="Descripción"
+          name="body"
+          value={body}
+          onChange={onInputChange}
+        />
       </Grid>
 
       {/* Image gallery */}
