@@ -1,14 +1,14 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SaveOutlined } from '@mui/icons-material';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import { Button, Grid, IconButton, TextField, Typography } from '@mui/material';
 import moment from 'moment/moment';
 
 import { useForm } from '../../hooks/useForm';
 import { ImageGallery } from '../components';
 
 import 'moment/locale/es';
-import { setActiveNote, startSaveNote } from '../../store/journal';
+import { clearMessage, setActiveNote, startSaveNote } from '../../store/journal';
 import Swal from 'sweetalert2';
 
 export const NoteView = () => {
@@ -24,6 +24,8 @@ export const NoteView = () => {
     return moment(newDate).format('DD MMMM YYYY, h:mm:ss a');
   }, [date]);
 
+  const fileInputRef = useRef();
+
   useEffect(() => {
     dispatch(setActiveNote(formState));
   }, [formState]);
@@ -32,10 +34,21 @@ export const NoteView = () => {
     if (messageSaved.length > 0) {
       Swal.fire('Nota actualizada', messageSaved, 'success');
     }
+
+    return () => {
+      dispatch(clearMessage());
+    };
   }, [messageSaved]);
 
   const onSaveNote = () => {
     dispatch(startSaveNote());
+  };
+
+  const onFileInputChange = ({ target }) => {
+    if (target.files === 0) return;
+
+    console.log(target.files);
+    // dispatch(startUploadingFiles(target.files));
   };
 
   return (
@@ -54,6 +67,24 @@ export const NoteView = () => {
         </Typography>
       </Grid>
       <Grid item>
+        <input
+          //
+          ref={fileInputRef}
+          type="file"
+          multiple
+          onChange={onFileInputChange}
+          style={{ display: 'none' }}
+        />
+
+        <IconButton
+          //
+          color="primary"
+          disabled={isSaving}
+          onClick={() => fileInputRef.current.click()}
+        >
+          <UploadOutlined />
+        </IconButton>
+
         <Button
           //
           color="primary"
