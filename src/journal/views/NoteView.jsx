@@ -6,9 +6,9 @@ import moment from 'moment/moment';
 
 import { useForm } from '../../hooks/useForm';
 import { ImageGallery } from '../components';
+import { clearMessage, setActiveNote, startSaveNote, startUploadingFiles } from '../../store/journal';
 
 import 'moment/locale/es';
-import { clearMessage, setActiveNote, startSaveNote } from '../../store/journal';
 import Swal from 'sweetalert2';
 
 export const NoteView = () => {
@@ -47,8 +47,7 @@ export const NoteView = () => {
   const onFileInputChange = ({ target }) => {
     if (target.files === 0) return;
 
-    console.log(target.files);
-    // dispatch(startUploadingFiles(target.files));
+    dispatch(startUploadingFiles(target.files));
   };
 
   return (
