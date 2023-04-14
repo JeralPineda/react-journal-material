@@ -25,7 +25,7 @@ export const journalSlice = createSlice({
     },
     setSaving: (state) => {
       state.isSaving = true;
-      //TODO: mensaje de error...
+      state.messageSaved = '';
     },
     updateNote: (state, { payload }) => {
       state.isSaving = false;
@@ -36,7 +36,7 @@ export const journalSlice = createSlice({
         return note;
       });
 
-      //TODO: mostrar mensaje de actualización
+      state.messageSaved = `${payload.title}, actualizada correctamente`;
     },
     deleteNoteById: (state, action) => {},
   },

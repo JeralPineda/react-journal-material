@@ -9,9 +9,10 @@ import { ImageGallery } from '../components';
 
 import 'moment/locale/es';
 import { setActiveNote, startSaveNote } from '../../store/journal';
+import Swal from 'sweetalert2';
 
 export const NoteView = () => {
-  const { active: note } = useSelector((state) => state.journal);
+  const { active: note, messageSaved, isSaving } = useSelector((state) => state.journal);
 
   const dispatch = useDispatch();
 
@@ -26,6 +27,12 @@ export const NoteView = () => {
   useEffect(() => {
     dispatch(setActiveNote(formState));
   }, [formState]);
+
+  useEffect(() => {
+    if (messageSaved.length > 0) {
+      Swal.fire('Nota actualizada', messageSaved, 'success');
+    }
+  }, [messageSaved]);
 
   const onSaveNote = () => {
     dispatch(startSaveNote());
@@ -47,7 +54,13 @@ export const NoteView = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <Button color="primary" sx={{ padding: 2 }} onClick={onSaveNote}>
+        <Button
+          //
+          color="primary"
+          sx={{ padding: 2 }}
+          onClick={onSaveNote}
+          disabled={isSaving}
+        >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </Button>
