@@ -1,7 +1,8 @@
 import { collection, doc, setDoc } from 'firebase/firestore/lite';
+
 import { FirebaseDB } from '../../firebase/config';
 import { loadNotes } from '../../helpers';
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes } from './journalSlice';
+import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes, setSaving, updateNote } from './journalSlice';
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
@@ -13,6 +14,7 @@ export const startNewNote = () => {
       title: '',
       body: '',
       date: new Date().getTime(),
+      imageUrls: [],
     };
 
     const newDoc = doc(collection(FirebaseDB, `${uid}/journal/notes`)); //create (referencia) doc
@@ -30,5 +32,22 @@ export const startLoadingNotes = () => {
 
     const notes = await loadNotes(uid);
     dispatch(setNotes(notes));
+  };
+};
+
+export const startSaveNote = () => {
+  return async (dispatch, getState) => {
+    dispatch(setSaving());
+
+    const { uid } = getState().auth; //uid for user
+    const { active: note } = getState().journal; //nota activa
+
+    const noteToFireStore = { ...note };
+    delete noteToFireStore.id; //eliminar el id
+
+    const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+    await setDoc(docRef, noteToFireStore, { merge: true }); //guardar DB
+
+    dispatch(updateNote(note));
   };
 };
