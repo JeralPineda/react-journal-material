@@ -21,7 +21,9 @@ describe('Pruebas en fileUpload', () => {
     //Limpieza
     const segments = url.split('/');
     const imageId = segments[segments.length - 1].replace('.jpg', '');
-    await cloudinary.api.delete_resources(['journal' + imageId]); //Eliminando imagen
+    await cloudinary.api.delete_resources(['journal/' + imageId], {
+      resource_type: 'image',
+    }); //Eliminando imagen
   });
 
   test('debe de retornar null', async () => {
