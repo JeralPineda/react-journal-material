@@ -12,7 +12,7 @@ export const initialState = {
 
 export const authenticatedState = {
   status: 'authenticated', // not-authenticated, authenticated, checking
-  uid: '1323',
+  uid: 'ABC123',
   email: 'demo@gmail.com',
   displayName: 'Demo User',
   photoURL: 'https://demo.jpg',
