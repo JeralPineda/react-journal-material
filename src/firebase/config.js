@@ -6,13 +6,24 @@ import { getFirestore } from 'firebase/firestore/lite';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+//Dev/Prod
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyAxXXsp658BJZyWbUEp4ABz8Jct9ER1qf8',
+//   authDomain: 'react-cursos-b3c08.firebaseapp.com',
+//   projectId: 'react-cursos-b3c08',
+//   storageBucket: 'react-cursos-b3c08.appspot.com',
+//   messagingSenderId: '433820922600',
+//   appId: '1:433820922600:web:050a135d0c533014014f5d',
+// };
+
+//Testing
 const firebaseConfig = {
-  apiKey: 'AIzaSyAxXXsp658BJZyWbUEp4ABz8Jct9ER1qf8',
-  authDomain: 'react-cursos-b3c08.firebaseapp.com',
-  projectId: 'react-cursos-b3c08',
-  storageBucket: 'react-cursos-b3c08.appspot.com',
-  messagingSenderId: '433820922600',
-  appId: '1:433820922600:web:050a135d0c533014014f5d',
+  apiKey: 'AIzaSyDdcMpYr6xsRAtMubqot6z5oCvsvPBxJ-w',
+  authDomain: 'redux-demo-database.firebaseapp.com',
+  projectId: 'redux-demo-database',
+  storageBucket: 'redux-demo-database.appspot.com',
+  messagingSenderId: '556018416573',
+  appId: '1:556018416573:web:97581f48b69375709870d4',
 };
 
 // Initialize Firebase
