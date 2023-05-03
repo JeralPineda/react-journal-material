@@ -6,28 +6,24 @@ import { getEnvironmets } from '../helpers';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+const {
+  VITE_API_KEY,
+  VITE_AUTH_DOMAIN,
+  VITE_PROJECT_ID,
+  VITE_STORAGE_BUCKET,
+  VITE_MESSAGING_SENDER_ID,
+  VITE_APP_ID,
+} = getEnvironmets();
+
 // Your web app's Firebase configuration
-//Dev/Prod
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyAxXXsp658BJZyWbUEp4ABz8Jct9ER1qf8',
-//   authDomain: 'react-cursos-b3c08.firebaseapp.com',
-//   projectId: 'react-cursos-b3c08',
-//   storageBucket: 'react-cursos-b3c08.appspot.com',
-//   messagingSenderId: '433820922600',
-//   appId: '1:433820922600:web:050a135d0c533014014f5d',
-// };
-
-const env = getEnvironmets();
-console.log(env);
-
-//Testing
+//Dev/Prod /Testing
 const firebaseConfig = {
-  apiKey: 'AIzaSyDdcMpYr6xsRAtMubqot6z5oCvsvPBxJ-w',
-  authDomain: 'redux-demo-database.firebaseapp.com',
-  projectId: 'redux-demo-database',
-  storageBucket: 'redux-demo-database.appspot.com',
-  messagingSenderId: '556018416573',
-  appId: '1:556018416573:web:97581f48b69375709870d4',
+  apiKey: VITE_API_KEY,
+  authDomain: VITE_AUTH_DOMAIN,
+  projectId: VITE_PROJECT_ID,
+  storageBucket: VITE_STORAGE_BUCKET,
+  messagingSenderId: VITE_MESSAGING_SENDER_ID,
+  appId: VITE_APP_ID,
 };
 
 // Initialize Firebase

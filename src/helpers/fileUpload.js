@@ -1,8 +1,10 @@
+import { getEnvironmets } from './getEnvironment';
+
 export const fileUpload = async (file) => {
   if (!file) throw new Error('No tenemos ningún archivo a subir');
 
-  const cloundUrl = 'https://api.cloudinary.com/v1_1/dyszc49bz/upload'; // import.meta.env.VITE_BASE_API_URL_CLOUDINARY; //https://api.cloudinary.com/v1_1/example/upload
-
+  const { VITE_BASE_API_URL_CLOUDINARY } = getEnvironmets();
+  const cloundUrl = VITE_BASE_API_URL_CLOUDINARY; // import.meta.env.VITE_BASE_API_URL_CLOUDINARY; //https://api.cloudinary.com/v1_1/example/upload
   const formData = new FormData();
   formData.append('upload_preset', 'react-journal');
   formData.append('file', file);
