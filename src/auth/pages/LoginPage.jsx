@@ -1,12 +1,22 @@
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Google } from '@mui/icons-material';
 
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
-import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth';
+import {
+  startGoogleSignIn,
+  startLoginWithEmailPassword,
+} from '../../store/auth';
 
 const formData = {
   email: '',
@@ -35,6 +45,7 @@ export const LoginPage = () => {
     <AuthLayout title="Login">
       <form
         //
+        aria-label="submit-form"
         onSubmit={onSubmit}
         className="animate__animated animate__fadeIn animate__faster"
       >
@@ -58,6 +69,9 @@ export const LoginPage = () => {
               label="Contraseña"
               name="password"
               type="password"
+              inputProps={{
+                'data-testid': 'password',
+              }}
               placeholder="Contraseña"
               value={password}
               onChange={onInputChange}
@@ -74,10 +88,10 @@ export const LoginPage = () => {
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <Button
-                //
                 type="submit"
                 variant="contained"
                 fullWidth
+                aria-label="google-btn"
                 disabled={isAuthenticated}
               >
                 Login
